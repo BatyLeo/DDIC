@@ -39,7 +39,11 @@ def newcard():
             Mod.append(0)
         else:
             Mod.append(int(mod))
-    nbex=int(input("nombre d'exemplaires : "))
+    nbex=input("nombre d'exemplaires : ")
+    if nbex=='':
+        nbex=0
+    else:
+        nbex=int(nbex)
     
     carte['Nom']=Nom
     carte['Ere']=Ere
