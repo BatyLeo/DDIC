@@ -134,30 +134,13 @@ def trace_card(x0,y0,name):
     plt.plot([x0,x0+w],[h7,h7],color='k',linewidth=0.8) # Pistes
     plt.plot([x0+w/3,x0+w/3],[h7,h8],color='k',linewidth=0.5)
     plt.plot([x0+2*w/3,x0+2*w/3],[h7,h8],color='k',linewidth=0.5)
+
+    plt.text(x0 + 1.5*w/20,h0 - 1.3*h/15,str(cost),fontsize = 9)
+    plt.text(x0 + 3.5*w/10,h0 - 1.3*h/15,name,fontsize = 9)
+    plt.text(x0 + 2.2*w/20,h1 - h/15.5,era*'I',fontsize = 8)
+    plt.text(x0 + 6.3*w/10,h1 - 0.65*h/15,type,fontsize = 4)
     
-
-
 """
-def trace_cardbis(x0,y0,card):
-	[name,type,cost,text,cons,prod,mod] = card
-	h0,h1,h2,h3,h4,h5,h6,h7,h8 = y0,y0-2*h/16,y0-3*h/16,y0-4*h/16,y0-10*h/16,y0-11*h/16,y0-12*h/16,y0-15*h/16,y0-h
-	plt.plot([x0,x0+w,x0+w,x0,x0],[y0,y0,y0-h,y0-h,y0],color = 'k')
-	plt.plot([x0,x0+w],[h1,h1],color='k',linewidth=0.8)
-	plt.plot([x0+2*w/10,x0+3*w/10],[h1,h0],color='k',linewidth=0.5)
-	plt.plot([x0+5*w/10,x0+6*w/10,x0+w,x0+w,x0+4*w/10],[h1,h2,h2,h1,h1],color='k',linewidth=0.5)
-	plt.plot([x0+w/10,x0+9*w/10,x0+9*w/10,x0+w/10,x0+w/10],[h3,h3,h4,h4,h3],color='k',linewidth=0.5)
-	plt.plot([x0,x0+4*w/10,x0+5*w/10,x0+6*w/10,x0+w],[h5,h5,h6,h5,h5],color='k',linewidth=0.8)
-	plt.plot([x0,x0+w],[h6,h6],color='k',linewidth=0.5)
-	plt.plot([x0+w/2,x0+w/2],[h6,h7],color='k',linewidth=0.8)
-	plt.plot([x0,x0+w],[h7,h7],color='k',linewidth=0.8)
-	plt.plot([x0+w/3,x0+w/3],[h7,h8],color='k',linewidth=0.5)
-	plt.plot([x0+2*w/3,x0+2*w/3],[h7,h8],color='k',linewidth=0.5)
-	
-        plt.text(x0 + 1.5*w/20,h0 - 1.3*h/15,str(cost),fontsize = 9)
-	plt.text(x0 + 3.5*w/10,h0 - 1.3*h/15,name,fontsize = 9)
-	plt.text(x0 + 2.2*w/20,h1 - h/15.5,era*'I',fontsize = 8)
-	plt.text(x0 + 6.3*w/10,h1 - 0.65*h/15,type,fontsize = 4)
-
 
 def test2(): 
     fig = plt.figure(figsize=(W,H))
