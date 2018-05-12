@@ -4,11 +4,13 @@ import scipy.ndimage as ndimage
 plt.rcParams['image.cmap'] = 'gray'
 
 ressources=['UM','fossile','électricité','nourriture','déchets','pollution']
+jauges=['Economique','Social','Environnemental']
 
 # création et édition des cartes
 
 def newcard():
     carte={}
+    Ere=input('Ere : ')
     Nom=input('Nom de la carte : ') # string
     Type=input('Type de la carte : ') # string
     Cout=input('Cout en UM de la carte : ') # int
@@ -21,6 +23,11 @@ def newcard():
     Prod=[]
     for i in range(len(ressources)):
         Prod.append(input('- ' + ressources[i]+' : '))
+    print('Modificateurs : ')
+    Mod=[]
+    for i in range(len(jauges)):
+        Mod.append(input('- ' + jauges[i]+' : '))
+    
         
     carte['Nom']=Nom
     carte['Type']=Type
@@ -28,6 +35,7 @@ def newcard():
     carte['Description']=Desc
     carte['Consommation']=Cons
     carte['Production']=Prod
+    carte['Modificateurs']=Mod
     np.save(Nom,carte)
     return carte
 
