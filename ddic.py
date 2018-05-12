@@ -30,6 +30,7 @@ def newcard():
     
         
     carte['Nom']=Nom
+    carte['Ere']=Ere
     carte['Type']=Type
     carte['Cout']=Cout
     carte['Description']=Desc
@@ -120,6 +121,8 @@ def trace_card(x0,y0,name):
     Desc=card['Description']
     Cons=card['Consommation']
     Prod=card['Production']
+    Ere=card['Ere']
+    Mod=card['Modificateurs']
 
     h0,h1,h2,h3,h4,h5,h6,h7,h8 = y0,y0-2*h/16,y0-3*h/16,y0-4*h/16,y0-10*h/16,y0-11*h/16,y0-12*h/16,y0-15*h/16,y0-h
     plt.plot([x0,x0+w,x0+w,x0,x0],[y0,y0,y0-h,y0-h,y0],color = 'k') # Contour
@@ -135,10 +138,10 @@ def trace_card(x0,y0,name):
     plt.plot([x0+w/3,x0+w/3],[h7,h8],color='k',linewidth=0.5)
     plt.plot([x0+2*w/3,x0+2*w/3],[h7,h8],color='k',linewidth=0.5)
 
-    plt.text(x0 + 1.5*w/20,h0 - 1.3*h/15,str(cost),fontsize = 9)
-    plt.text(x0 + 3.5*w/10,h0 - 1.3*h/15,name,fontsize = 9)
-    plt.text(x0 + 2.2*w/20,h1 - h/15.5,era*'I',fontsize = 8)
-    plt.text(x0 + 6.3*w/10,h1 - 0.65*h/15,type,fontsize = 4)
+    plt.text(x0 + 1.5*w/20,h0 - 1.3*h/15,Cout,fontsize = 9)
+    plt.text(x0 + 3.5*w/10,h0 - 1.3*h/15,Nom,fontsize = 9)
+    plt.text(x0 + 2.2*w/20,h1 - h/15.5,int(Ere)*'I',fontsize = 8)
+    plt.text(x0 + 6.3*w/10,h1 - 0.65*h/15,Type,fontsize = 4)
     
 """
 
