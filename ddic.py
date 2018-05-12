@@ -10,26 +10,37 @@ jauges=['Economique','Social','Environnemental']
 
 def newcard():
     carte={}
-    Ere=input('Ere : ')
+    Ere=int(input('Ere : '))
     Nom=input('Nom de la carte : ') # string
     Type=input('Type de la carte : ') # string
-    Cout=input('Cout en UM de la carte : ') # int
+    Cout=int(input('Cout en UM de la carte : ')) # int
     Desc=input('Description et effets de la carte : ') # string
     print('Consommation : ')
     Cons=[]
     for i in range(len(ressources)):
-        Cons.append(input('- ' + ressources[i]+' : '))
+        cons=input('- ' + ressources[i]+' : ')
+        if cons=='':
+            Cons.append(0)
+        else:
+            Cons.append(int(cons))
     print('Production : ')
     Prod=[]
     for i in range(len(ressources)):
-        Prod.append(input('- ' + ressources[i]+' : '))
+        prod=input('- ' + ressources[i]+' : ')
+        if prod=='':
+            Prod.append(0)
+        else:
+            Prod.append(int(prod))
     print('Modificateurs : ')
     Mod=[]
     for i in range(len(jauges)):
-        Mod.append(input('- ' + jauges[i]+' : '))
-    nbex=input("nombre d'exemplaires : ")
+        mod=input('- ' + jauges[i]+' : ')
+        if mod=='':
+            Mod.append(0)
+        else:
+            Mod.append(int(mod))
+    nbex=int(input("nombre d'exemplaires : "))
     
-        
     carte['Nom']=Nom
     carte['Ere']=Ere
     carte['Type']=Type
@@ -42,7 +53,50 @@ def newcard():
     np.save(Nom,carte)
     return carte
 
-def modify(nom,champ,valeur):
+def modify_card(nom):
+    res=np.load(nom+'.npy').item()
+    champ=input('Champ à modifier : ')
+    while champ!='':
+        if (champ=='Exemplaires' or champ=='Ere' or champ=='Cout'):
+            modif=input("Modification : ")
+            res[champ]=int(modif)
+        elif (champ=='Nom' or champ=='Type' or champ=='Description'):
+            modif=input("Modification : ")
+            res[champ]=modif
+        elif champ=='Production':
+            Prod=[]
+            for i in range(len(ressources)):
+                prod=input('- ' + ressources[i]+' : ')
+                if prod=='':
+                    Prod.append(0)
+                else:
+                    Prod.append(int(prod))
+            res[champ]=Prod
+        elif champ=='Consommation':
+            Cons=[]
+            for i in range(len(ressources)):
+                cons=input('- ' + ressources[i]+' : ')
+                if cons=='':
+                    Cons.append(0)
+                else:
+                    Cons.append(int(cons))
+            res[champ]=Cons
+        else: # champs==modificateurs
+            Mod=[]
+            for i in range(len(ressources)):
+                mod=input('- ' + ressources[i]+' : ')
+                if mod=='':
+                    Mod.append(0)
+                else:
+                    Mod.append(int(mod))
+            res[champ]=Mod
+
+        champ=input('Champ à modifier : ')
+    np.save(res['Nom'],res)
+    return res
+        
+
+def modify_champ(nom,champ,valeur):
     res=np.load(nom+'.npy').item()
     res[champ]=valeur
     np.save(res['Nom'],res)
