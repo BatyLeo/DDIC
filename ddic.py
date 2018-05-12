@@ -27,6 +27,7 @@ def newcard():
     Mod=[]
     for i in range(len(jauges)):
         Mod.append(input('- ' + jauges[i]+' : '))
+    nbex=input("nombre d'exemplaires : ")
     
         
     carte['Nom']=Nom
@@ -37,6 +38,7 @@ def newcard():
     carte['Consommation']=Cons
     carte['Production']=Prod
     carte['Modificateurs']=Mod
+    carte['Exemplaires']=nbex
     np.save(Nom,carte)
     return carte
 
@@ -123,6 +125,7 @@ def trace_card(x0,y0,name):
     Prod=card['Production']
     Ere=card['Ere']
     Mod=card['Modificateurs']
+    Nbex=card['Exemplaires']
 
     h0,h1,h2,h3,h4,h5,h6,h7,h8 = y0,y0-2*h/16,y0-3*h/16,y0-4*h/16,y0-10*h/16,y0-11*h/16,y0-12*h/16,y0-15*h/16,y0-h
     plt.plot([x0,x0+w,x0+w,x0,x0],[y0,y0,y0-h,y0-h,y0],color = 'k') # Contour
