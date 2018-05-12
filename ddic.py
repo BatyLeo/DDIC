@@ -181,11 +181,16 @@ def cards_grid():
 	Ny = int(H//h)
 	dx = (W%w)/(Nx+1)
 	dy = (H%h)/(Ny+1)
-	pos = []
+   pos = []
 	for nx in range(Nx):
 		for ny in range(Ny):
 			pos.append((dx + nx*(w + dx),H - dy - ny*(h + dy)))
 	return pos
+
+side = h/32
+def disp_squares(x,y,n,color):
+	for k in range(n):
+		ax.add_patch(patches.Rectangle((x+1.8*k*side,y),side,side,facecolor=color,linewidth=0.5))
 
 def trace_card(x0,y0,name):
     card=load_card(name)
@@ -200,56 +205,79 @@ def trace_card(x0,y0,name):
     Mod=card['Modificateurs']
     Nbex=card['Exemplaires']
 
-    h0,h1,h2,h3,h4,h5,h6,h7,h8 = y0,y0-2*h/16,y0-3*h/16,y0-4*h/16,y0-10*h/16,y0-11*h/16,y0-12*h/16,y0-15*h/16,y0-h
-    plt.plot([x0,x0+w,x0+w,x0,x0],[y0,y0,y0-h,y0-h,y0],color = 'k') # Contour
-    plt.plot([x0,x0+w],[h1,h1],color='k',linewidth=0.8) # Cout/nom
-    plt.plot([x0+2*w/10,x0+3*w/10],[h1,h0],color='k',linewidth=0.5)
-    plt.plot([x0+5*w/10,x0+6*w/10,x0+w],[h1,h2,h2],color='k',linewidth=0.5) # Type
-    plt.plot([x0,x0+2.2*w/10,x0+3.2*w/10],[h2-h/46,h2-h/46,h1],color='k',linewidth=0.5) # Ere
-    plt.plot([x0+w/10,x0+9*w/10,x0+9*w/10,x0+w/10,x0+w/10],[h3,h3,h4,h4,h3],color='k',linewidth=0.5) # Texte
-    plt.plot([x0,x0+4*w/10,x0+5*w/10,x0+6*w/10,x0+w],[h5,h5,h6,h5,h5],color='k',linewidth=0.8) # Consommation/production
-    plt.plot([x0,x0+w],[h6,h6],color='k',linewidth=0.5)
-    plt.plot([x0+w/2,x0+w/2],[h6,h7],color='k',linewidth=0.8)
-    plt.plot([x0,x0+w],[h7,h7],color='k',linewidth=0.8) # Pistes
-    plt.plot([x0+w/3,x0+w/3],[h7,h8],color='k',linewidth=0.5)
-    plt.plot([x0+2*w/3,x0+2*w/3],[h7,h8],color='k',linewidth=0.5)
+   h0,h1,h2,h3,h4,h5,h6,h7,h8 = y0,y0-2*h/16,y0-3*h/16,y0-4*h/16,y0-9*h/16,y0-10*h/16,y0-11*h/16,y0-15*h/16,y0-h
+	plt.plot([x0,x0+w,x0+w,x0,x0],[y0,y0,y0-h,y0-h,y0],color = 'k') #Contours
+	plt.plot([x0,x0+w],[h1,h1],color='k',linewidth=0.8) #Cout/nom
+	plt.plot([x0+2*w/10,x0+3*w/10],[h1,h0],color='k',linewidth=0.5)
+	plt.plot([x0+5*w/10,x0+6*w/10,x0+w],[h1,h2,h2],color='k',linewidth=0.5) #Type
+	plt.plot([x0,x0+2.2*w/10,x0+3.2*w/10],[h2-h/46,h2-h/46,h1],color='k',linewidth=0.5) #Ere
+	plt.plot([x0+w/10,x0+9*w/10,x0+9*w/10,x0+w/10,x0+w/10],[h3,h3,h4,h4,h3],color='k',linewidth=0.5) #Texte
+	plt.plot([x0,x0+4*w/10,x0+5*w/10,x0+6*w/10,x0+w],[h5,h5,h6,h5,h5],color='k',linewidth=0.5) #Consommation/production
+	plt.plot([x0,x0+w],[h6,h6],color='k',linewidth=0.5)
+	plt.plot([x0+w/2,x0+w/2],[h6,h7],color='k',linewidth=0.8)
+	plt.plot([x0,x0+w],[h7,h7],color='k',linewidth=0.8) #Modificateurs
+	plt.plot([x0+w/3,x0+w/3],[h7,h8],color='k',linewidth=0.8)
+	plt.plot([x0+2*w/3,x0+2*w/3],[h7,h8],color='k',linewidth=0.8)
+	
+	plt.text(x0 + 1.5*w/20,h0 - 1.3*h/15,str(Cout),fontsize = 9)
+	plt.text(x0 + 3.5*w/10,h0 - 1.3*h/15,Nom,fontsize = 9)
+	plt.text(x0 + 2.2*w/20,h1 - h/15.5,Ere*'I',fontsize = 8)
+	plt.text(x0 + 6.3*w/10,h1 - 0.65*h/15,Type,fontsize = 4)
+	plt.text(x0 + 0.8*w/20,h5 - 0.65*h/15,'Consommation',fontsize = 4)
+	plt.text(x0 + 12.8*w/20,h5 - 0.65*h/15,'Production',fontsize = 4)
+	
+	cols_res = ['#ffc800','#000000','#55bcff','#ff0000','#954e00','#8d8d8d']	
+	i = 0 #Affichage de la consommation
+	for k in range(6):
+		res = Cons[k]
+		if res:
+			i+=1
+			yi = h6 - i*h/18
+			plt.text(x0 + 0.5*w/10,yi,'-',fontsize = 8)
+			if res < 5:
+				disp_squares(x0 + 1.2*w/10,yi,res,cols_res[k])
+			else :
+				disp_squares(x0 + 1.2*w/10,yi,1,cols_res[k])
+				plt.text(x0 + 1.2*w/10 + 2*side,yi + side/10,'x',fontsize = 5)
+				plt.text(x0 + 1.2*w/10 + 3.5*side,yi,str(res),fontsize = 6)
+	i = 0 #Affichage de la production
+	for k in range(6):
+		res = Prod[k]
+		if res:
+			i+=1
+			yi = h6 - i*h/18
+			plt.text(x0 + w/2 + 0.5*w/10,yi + side/8,'+',fontsize = 5)
+			if res < 5:
+				disp_squares(x0 + w/2 + 1.2*w/10,yi,res,cols_res[k])
+			else :
+				disp_squares(x0 + w/2 + 1.2*w/10,yi,1,cols_res[k])
+				plt.text(x0 + w/2 + 1.2*w/10 + 2*side,yi + side/10,'x',fontsize = 5)
+				plt.text(x0 + w/2 + 1.2*w/10 + 3.5*side,yi,str(res),fontsize = 6)
 
-    plt.text(x0 + 1.5*w/20,h0 - 1.3*h/15,Cout,fontsize = 9)
-    plt.text(x0 + 3.5*w/10,h0 - 1.3*h/15,Nom,fontsize = 9)
-    plt.text(x0 + 2.2*w/20,h1 - h/15.5,int(Ere)*'I',fontsize = 8)
-    plt.text(x0 + 6.3*w/10,h1 - 0.65*h/15,Type,fontsize = 4)
-    
-"""
-
-def test2(): 
-    fig = plt.figure(figsize=(W,H))
-    plt.plot([0,W,W,0,0],[H,H,0,0,H],color='k')
-    
-    testcard = ['USINES','Infrastructure',13,'blabla',[1,0],[1,1,0,0,0,0],[0,0,0]]
-    #testcard='Usines'
-    for pos in cards_grid():
-        trace_cardbis(pos[0],pos[1],testcard)
-    
-    plt.axis('equal')
-    plt.axis('off')
-    plt.show()
-    
-    plt.savefig('cards.png',format='png',dpi=500)
-"""
+	cols_mod = ['#8321d2','#1ca200','#af1d1d']
+	for k in range(3):
+		mod = Mod[k]
+		if mod > 0:
+			ax.add_patch(patches.Rectangle((x0+k*w/3,h8),w/3,h/16,facecolor=cols_mod[k]))
+			plt.text(x0 + w/8 + k*w/3,h7 - h/22,'+' + str(mod),fontsize = 6,color = 'w')
+		elif mod < 0:
+			ax.add_patch(patches.Rectangle((x0+k*w/3,h8),w/3,h/16,facecolor=cols_mod[k]))
+			plt.text(x0 + w/8 + k*w/3,h7 - h/22,'–' + str(-mod),fontsize = 6,color = 'w')
 
 def test(): 
     fig = plt.figure(figsize=(W,H))
+    ax = fig.add_subplot(111,aspect = 'equal')
     plt.plot([0,W,W,0,0],[H,H,0,0,H],color='k')
     
-    testcard='Usines'
+    testcard = ['USINES','Infrastructure',13,'blabla',[0,1,3,0,0,0],[6,0,0,2,1,1],2,[1,0,-4],10]
     for pos in cards_grid():
-        trace_card(pos[0],pos[1],testcard)
-    
+	     trace_card(pos[0],pos[1],testcard)
+
     plt.axis('equal')
     plt.axis('off')
-    #plt.show()
-    
-    plt.savefig('test.png',format='png',dpi=500)    
+    plt.show()
+
+    plt.savefig('test.png',format='png',dpi=700)
     
     resize('test.png')
     
