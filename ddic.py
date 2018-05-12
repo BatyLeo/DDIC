@@ -4,7 +4,9 @@ import scipy.ndimage as ndimage
 plt.rcParams['image.cmap'] = 'gray'
 
 ressources=['UM','fossile','électricité','nourriture','déchets','pollution']
-jauges=['Economique','Social','Environnemental']
+jauges=['Economique','Environnemental','Social']
+
+
 
 # création et édition des cartes
 
@@ -55,9 +57,16 @@ def newcard():
     carte['Modificateurs']=Mod
     carte['Exemplaires']=nbex
     np.save(Nom,carte)
+    
+    DECK1=np.load('DECK1.npy')
+    DECK1=np.append(DECK1,[Nom])
+    np.save('DECK1',DECK1)
     return carte
 
+
 def modify_card(nom):
+    DECK1=np.load('DECK1.npy')
+    DECK1=np.setdiff1d(DECK1,nom)
     res=np.load(nom+'.npy').item()
     champ=input('Champ à modifier : ')
     while champ!='':
@@ -97,13 +106,19 @@ def modify_card(nom):
 
         champ=input('Champ à modifier : ')
     np.save(res['Nom'],res)
+    DECK1=np.append(DECK1,res['Nom'])
+    np.save('DECK1',DECK1)
     return res
         
 
 def modify_champ(nom,champ,valeur):
+    DECK1=np.load('DECK1.npy')
+    DECK1.remove(nom)
     res=np.load(nom+'.npy').item()
     res[champ]=valeur
     np.save(res['Nom'],res)
+    DECK1=np.append(DECK1,res['Nom'])
+    np.save('DECK1',DECK1)
     return res
     
 def load_card(nom):
