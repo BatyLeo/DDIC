@@ -271,7 +271,7 @@ def test():
     
     testcard = ['USINES','Infrastructure',13,'blabla',[0,1,3,0,0,0],[6,0,0,2,1,1],2,[1,0,-4],10]
     for pos in cards_grid():
-	     trace_card(pos[0],pos[1],testcard)
+	     trace_card(pos[0],pos[1],"Usines basique")
 
     plt.axis('equal')
     plt.axis('off')
