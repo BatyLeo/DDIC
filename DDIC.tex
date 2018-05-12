@@ -1,0 +1,214 @@
+\documentclass[10pt,twoside,a4paper]{article}
+\usepackage{amsmath, amssymb, amsfonts, mathrsfs} %les plus utiles et quasi indispensables 
+\usepackage{amsthm}%\usepackage[T1]{fontenc}
+\usepackage{a4wide}
+\usepackage[latin1]{inputenc}
+\usepackage{fancyhdr} %pour les hauts et bas de page
+\usepackage[francais]{babel}% donne de bonnes c\'esures  en francais
+\usepackage{titlesec}%pour modifier le style des sections
+\usepackage{float}%pour fixer les flottants
+\usepackage{url}%pour ecrire une adresse d'un site web
+\usepackage[all]{xy}%pour faire des diagrammes
+\usepackage[dvips]{graphicx}
+\usepackage{todonotes}
+\usepackage{graphicx}
+\usepackage{pgf,tikz}
+\usetikzlibrary{arrows}
+\usepackage{enumitem}
+\usepackage[T1]{fontenc}
+\usepackage{hyperref}
+\usepackage{array}
+\usepackage{chemfig}
+\usepackage{graphics}
+\usepackage{eurosym}
+\usepackage{soul}
+\usepackage{wasysym}
+\usepackage{textcomp}
+\usepackage{listings}
+\usepackage{stmaryrd}
+\usepackage{multicol}
+\usepackage{amssymb}
+
+
+
+\title{DDIC}
+\author{}
+\date{}
+
+
+\begin{document}
+\maketitle
+
+\tableofcontents
+
+\newpage
+
+\section{Mat\'eriel}
+
+\begin{enumerate}
+
+\item Plateau de jeu central constitu\'e de trois pistes de d\'eveloppement (social, \'economique, et environnemental) num\'erot\'ees de $0$ \`a $10$.
+
+\item 4 plateaux personnels
+
+\item Des pions ressources
+
+\item Des cartes \'ev\`enements
+
+\item Des cartes projets
+
+\end{enumerate}
+
+\newpage
+
+\begin{multicols}{2}
+
+
+
+\section{But g\'eneral du jeu}
+
+Chaque joueur g\`ere le d\'eveloppement d'un pays \`a travers trois p\'eriodes principales que l'on nommera \`eres:
+
+\begin{enumerate}
+
+\item L'\`ere industrielle
+
+\item L'\`ere contemporaine/moderne
+
+\item L'\`ere futuriste
+
+\end{enumerate}
+
+A la fin de la troisi\`eme \`ere, l'objectif est d'avoir le pays le plus d\'evelopp\'e, de la mani\`ere la plus durable possible. Le d\'eveloppement d'un est repr\'esent\'e par trois jauges repr\'esentant les trois piliers du d\'eveloppement durable : les domaines social, \'economique, et environnemental. Sur chaque jauge, le d\'eveloppement d'un pays est caract\'eris\'e par un entier entre 0 et 10.
+
+\section{Mise en place}
+
+
+\bigskip
+
+\section{D\'eroulement d'une g\'en\'eration}
+
+Chaque g\'en\'eration se d\'eroule en trois phases:
+
+\begin{enumerate}
+
+\item Tours de jeu
+	
+\item Phase de revenus
+
+\item Phase \'ev\`enements
+
+\end{enumerate}
+
+
+\subsection{Tours de jeu}
+
+\todo[inline]{Effets de d\'ebut de tour}
+
+Chacun son tour, chaque joueur effectue une action parmi les suivantes:
+\begin{enumerate}
+\item Action basique
+\item Jouer une carte projet
+\item Passer son tour
+\end{enumerate}
+
+\subsubsection{Action basique}
+
+\subsubsection{Jouer une carte projet}
+
+\subsubsection{Passer son tour}
+
+Lorsqu'un joueur passe son tour, il ne peut plus faire d'action durant la g\'en\'eration.
+
+\subsection{Phase revenus}
+
+Chaque joueur gagne des revenus correspondants \`a sa production
+
+\subsection{Phase \'ev\`enements}
+
+On pioche 2 cartes \'ev\`enements dans la pile \'ev\`enements dont on r\'esout les effets.
+
+
+\section{Ressources}
+
+Chaque joueur dispose d'un plateau personnel rendant compte de l'\'etat de 6 ressources dans son pays: l'unit\'e mon\'etaire (UM), les ressources fossiles, l'\'electricit\'e, les d\'echets, la nourriture, et la pollution.
+
+\subsection{L'unit\'e mon\'etaire (UM)}
+
+L'unit\'e mon\'etaire est la principale ressource du jeu, avec laquelle on effectue la majorit\'e des transactions. Chaque joueur poss\`ede sur son plateau personnel une jauge indiquant sa production par g\'en\'eration et une zone dans laquelle il stocke la quantit\'e d'UM qu'il poss\`ede.
+
+\subsection{Ressources fossiles}
+
+Les ressources fossiles telles que le p\'etrole, le charbon, le gaz, l'uranium, ... sont repr\'esent\'ees par une seule et m\^eme ressource, afin de simplifier le tout. Comme pour l'UM, les ressources fossiles sont repr\'esent\'ees par une valeur de production sur une jauge, et par une quantit\'e en stock.
+
+La particularit\'e des ressources fossiles est qu'elles sont pr\'esentes en quantit\'e limit\'ee. Ainsi, au fur et \`a mesure de la partie, ces ressources se feront de plus en plus rares et seront plus difficiles \`a produire. Sur le plateau central sont situ\'ees toutes les ressources fossiles pouvant \^etre extraites pendant la partie. Elle sont r\'eparties en 3 zones. Lorsque l'on produit des ressources fossiles lors de la phase revenus, on prend un nombre de pions ressources fossiles (pions noirs) de la r\'eserve globale suivant les r\`egles ci-dessous:
+
+\begin{itemize}
+\item Tant qu'une zone n'est pas vide on prend les pions toujours dans la m\^eme zone en commen\c cant par la premi\`ere.
+\item Si au d\'ebut de la phase revenus il y avait des pions dans la zone 1, on prend 3 pions par point de production que l'on poss\'ede et on les place dans notre r\'eserve.
+\item Si au d\'ebut de la phase revenus la zone 1 \'etait vide et la zone 2 non vide, chaque point de production rapporte 2 ressources fossiles.
+\item Si au d\'ebut de la phase revenus les zones 1 et 2 \'etaient vides, chaque point production rapporte 1 ressource.
+\item S'il n'y a plus de ressources dans la r\'eserve, on n'en prend pas.
+\end{itemize}
+ 
+ D\`es que l'on d\'epense des ressources fossiles, on les remet dans la bo\^ite et non dans la r\'eserve g\'en\'erale.
+
+\subsection{(Production d') Electricit\'e}
+
+L'\'electricit\'e \'etant une ressource particuli\`ere et difficilement stockable \`a long terme, on ne repr\'ente donc dans le jeu uniquement la production d'\'electricit\'e disponible que poss\`ede un joueur, i.e. la quantit\'e d'\'energie \'electrique qui n'est pas utilis\'ee pour les infrastructures du pays. Ainsi, lorsque l'on construit un complexe de b\^atiments n\'ecessitant une alimentation \'electrique, on baisse notre production d\'electricit\'e pour repr\'esenter le fait qu'elle est r\'eserv\'ee te inutilisable pour d'autres besoins. 
+
+\todo[inline]{production n\'egative? (importation)}
+
+\subsection{D\'echets}
+
+Les d\'echets mat\'eriels sont repr\'esent\'es dans le jeu par la ressource d\'echets. Chaque joueur poss\`ede sa propre production relative comme pour l'\'electricit\'e (une quantit\'e n\'egative repr\'esente une capacit\'e de traitement sup\'erieure \`a la production de d\'echets).
+
+A chaque g\'en\'eration, tout d\'echet en stock doit \^etre trait\'e. Il y a deux mani\`eres le faire pour chaque d\'echet en stock:
+
+\begin{enumerate}
+\item Le jeter dans la nature: dans ce cas on transfert le pion dans la zone pollution (cf. pollution)
+\item On le fati traiter par un service exterieur en payant $X$ UM. On retire le pion ressource de notre plateau.
+\end{enumerate}
+
+\subsection{Nourriture}
+
+L'\'etat de la nourriture chez un joueur est caract\'erisé par la position d'un pion sur une jauge repr\'esentant la production de nourriture exc\'edentaire du pays par g\'en\'eration. Ainsi, une production de $0$ signifie que la production alimentaire du pays est suffisante \`a nourrir la population, mais qu'il n'y a pas d'exc\'edent qui permettrait d'exporter ou d'encaisser une augmentation de population. Au contraire, une production n\'egative signifie que le pays ne produit pas assez de nourriture et doit donc en importer \`a chaque g\'en\'eration. 
+
+Pour cela, au d\'ebut de chaque g\'en\'eration, tout joueur qui a une production de nourriture n\'egative doit payer un suppl\'ement de $X$ UM par point de production manquant afin d'importer la nourriture n\'ecessaire. \todo[inline]{exportation automatique ou/et \`a travers des projets?}
+
+\subsection{Pollution}
+
+La pollution se stocke comme une ressource et va permettre de quantifier l'\'etat environnemental du pays. D\`es qu'une carte cr\'ee de la pollution, on ajoute un pion pollution dans la zone correspondante. D\`es que l'on atteint 10 pollution dans cette zone, on retire les 10 pions et on baisse d'un point l'\'etat de l'environnement dans notre pays sur la jauge centrale.
+
+\subsection{Autres ressources mineures}
+
+\section{Calcul des scores}
+
+
+Chaque joueur classe les trois \'echelles de d\'eveloppement dans l'ordre d\'ecroissant de sa position sur ces derni\`eres, et calcule son score de la mani\`ere suivante:
+
+
+\begin{enumerate}
+
+\item Chaque niveau atteint sur l'\'echelle de d\'eveloppement la plus haute rapporte 1 point
+\item Chaque niveau atteint sur l'\'echelle interm\'ediaire rapporte 2 points
+\item Chaque niveau atteint sur l\'echelle la plus basse rapporte 3 points
+
+\end{enumerate}
+
+
+
+\end{multicols}
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
