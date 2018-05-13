@@ -1,6 +1,7 @@
 import numpy as np 
 import matplotlib.pyplot as plt 
 import matplotlib.patches as patches
+from cards import *
 plt.rcParams['image.cmap'] = 'gray'
 
 ressources=['UM','fossile','électricité','nourriture','déchets','pollution']
@@ -62,21 +63,21 @@ def cards_grid():
     dx = (W%w)/(Nx+1)
     dy = (H%h)/(Ny+1)
     pos = []
-    for nx in range(Nx):
-        for ny in range(Ny):
+    for ny in range(Ny):
+        for nx in range(Nx):
             pos.append((dx + nx*(w + dx),H - dy - ny*(h + dy)))
     return pos
 
 side = h/32
 def disp_squares(x,y,n,color):
     for k in range(n):
+        ax.add_patch(patches.Rectangle((x+1.8*k*side,y),side,side,facecolor=color,linewidth=0.5))
 
 def cut(string,n_char):
     i = min(n_char,len(string)-1)
     while string[i] != ' ' and i>=0:
         i -= 1
     return i
-        ax.add_patch(patches.Rectangle((x+1.8*k*side,y),side,side,facecolor=color,linewidth=0.5))
 
 def trace_card(x0,y0,name):
     card=load_card(name)
@@ -166,14 +167,18 @@ ax = fig.add_subplot(111,aspect = 'equal')
 plt.plot([0,W,W,0,0],[H,H,0,0,H],color='k')
 
 testcard = ['USINES','Infrastructure',13,'blabla',[0,1,3,0,0,0],[6,0,0,2,1,1],2,[1,0,-4],10]
-for pos in cards_grid():
-	     trace_card(pos[0],pos[1],"Taylorisme")
+
+DECK = loadDECK1()
+grid = cards_grid()
+
+'''for i in range(DECK.shape[0]):
+    trace_card(grid[i][0],grid[i][1],DECK[i])
 
 plt.axis('equal')
 plt.axis('off')
-plt.show()
+#plt.show()
 
-plt.savefig('test.png',format='png',dpi=700)
+plt.savefig('test.png',format='png',dpi=500)
 
-resize('test.png')
+resize('test.png')'''
     
