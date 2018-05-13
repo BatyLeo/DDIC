@@ -1,8 +1,5 @@
 import numpy as np 
 import matplotlib.pyplot as plt 
-import matplotlib.patches as patches
-import scipy.ndimage as ndimage
-plt.rcParams['image.cmap'] = 'gray'
 
 ressources=['UM','fossile','électricité','nourriture','déchets','pollution']
 jauges=['Economique','Environnemental','Social']
@@ -73,6 +70,7 @@ def modify_card(nom):
     DECK1=np.load('DECK1.npy')
     DECK1=np.setdiff1d(DECK1,nom)
     res=np.load('Cards/'+nom+'.npy').item()
+    print(res)
     champ=input('Champ à modifier : ')
     while champ!='':
         if (champ=='Exemplaires' or champ=='Ere' or champ=='Cout'):
