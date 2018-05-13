@@ -1,7 +1,6 @@
 import numpy as np 
 import matplotlib.pyplot as plt 
 import matplotlib.patches as patches
-import scipy.ndimage as ndimage
 plt.rcParams['image.cmap'] = 'gray'
 
 ressources=['UM','fossile','électricité','nourriture','déchets','pollution']
@@ -71,6 +70,12 @@ def cards_grid():
 side = h/32
 def disp_squares(x,y,n,color):
     for k in range(n):
+
+def cut(string,n_char):
+    i = min(n_char,len(string)-1)
+    while string[i] != ' ' and i>=0:
+        i -= 1
+    return i
         ax.add_patch(patches.Rectangle((x+1.8*k*side,y),side,side,facecolor=color,linewidth=0.5))
 
 def trace_card(x0,y0,name):
@@ -101,7 +106,17 @@ def trace_card(x0,y0,name):
     plt.plot([x0+2*w/3,x0+2*w/3],[h7,h8],color='k',linewidth=0.8)
     
     plt.text(x0 + 1.5*w/20,h0 - 1.3*h/15,str(Cout),fontsize = 9)
-    plt.text(x0 + 3.5*w/10,h0 - 1.3*h/15,Nom,fontsize = 9)
+    if len(Nom) < 8:
+        plt.text(x0 + 3.5*w/10,h0 - 1.3*h/15,Nom,fontsize = 9)
+    else:
+        if len(Nom) < 13:
+            plt.text(x0 + 3.5*w/10 - h/100,h0 - 1.3*h/15 + h/150,Nom,fontsize = 7)
+        else:
+            esp = cut(Nom,12)
+            if esp == -1:
+                Nom = 'XXXXXXXXXXXX'
+            plt.text(x0 + 3.5*w/10,h0 - 1.3*h/15 + h/30,Nom[:esp],fontsize = 6)
+            plt.text(x0 + 3.5*w/10,h0 - 1.3*h/15 - h/60,Nom[esp+1:],fontsize = 6)
     plt.text(x0 + 2.2*w/20,h1 - h/15.5,Ere*'I',fontsize = 8)
     plt.text(x0 + 6.3*w/10,h1 - 0.65*h/15,Type,fontsize = 4)
     plt.text(x0 + 0.8*w/20,h5 - 0.65*h/15,'Consommation',fontsize = 4)
