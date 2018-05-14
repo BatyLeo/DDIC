@@ -79,6 +79,17 @@ def cut(string,n_char):
         i -= 1
     return i
 
+def write(x0,y0,string,fontsize,dy,n_char):
+	lines = []
+	n = 0
+	while len(string) > n_char:
+		n = cut(string,n_char)
+		lines.append(string[:n])
+		string = string[n+1:]
+	lines.append(string)
+	for i in range(len(lines)):
+		plt.text(x0,y0 - i*dy,lines[i],fontsize = fontsize)
+
 def trace_card(x0,y0,name):
     card=load_card(name)
     
@@ -120,6 +131,7 @@ def trace_card(x0,y0,name):
             plt.text(x0 + 3.5*w/10,h0 - 1.3*h/15 - h/60,Nom[esp+1:],fontsize = 6)
     plt.text(x0 + 2.2*w/20,h1 - h/15.5,Ere*'I',fontsize = 8)
     plt.text(x0 + 6.3*w/10,h1 - 0.65*h/15,Type,fontsize = 4)
+    write(x0 + 2.7*w/20,h3 - h/20,Desc,5,h/30,25)
     plt.text(x0 + 0.8*w/20,h5 - 0.65*h/15,'Consommation',fontsize = 4)
     plt.text(x0 + 12.8*w/20,h5 - 0.65*h/15,'Production',fontsize = 4)
     
@@ -171,14 +183,13 @@ testcard = ['USINES','Infrastructure',13,'blabla',[0,1,3,0,0,0],[6,0,0,2,1,1],2,
 DECK = loadDECK1()
 grid = cards_grid()
 
-'''for i in range(DECK.shape[0]):
-    trace_card(grid[i][0],grid[i][1],DECK[i])
+for i in range(DECK.shape[0]):
+    trace_card(grid[i][0],grid[i][1],'Exportation de pétrole')
 
 plt.axis('equal')
 plt.axis('off')
-#plt.show()
+plt.show()
 
-plt.savefig('test.png',format='png',dpi=500)
+'''plt.savefig('test.png',format='png',dpi=500)
 
 resize('test.png')'''
-    
