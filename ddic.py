@@ -6,6 +6,9 @@ plt.rcParams['image.cmap'] = 'gray'
 
 ressources=['UM','fossile','électricité','nourriture','déchets','pollution']
 jauges=['Economique','Environnemental','Social']
+cols_mod = ['#8321d2','#1ca200','#af1d1d']
+cols_mod_light = ['#e7d5ff','#dcffd5','#ffd5d5']
+cols_res = ['#ffc800','#000000','#55bcff','#ff0000','#954e00','#8d8d8d']
 
     
 # traitement des images
@@ -105,6 +108,7 @@ def trace_card(x0,y0,name):
 
     h0,h1,h2,h3,h4,h5,h6,h7,h8 = y0,y0-2*h/16,y0-3*h/16,y0-4*h/16,y0-9*h/16,y0-10*h/16,y0-11*h/16,y0-15*h/16,y0-h
     plt.plot([x0,x0+w,x0+w,x0,x0],[y0,y0,y0-h,y0-h,y0],color = 'k') #Contours
+    ax.add_patch(patches.Rectangle((x0,h1),w,h0-h1,facecolor='#fdffca'))
     plt.plot([x0,x0+w],[h1,h1],color='k',linewidth=0.8) #Cout/nom
     plt.plot([x0+2*w/10,x0+3*w/10],[h1,h0],color='k',linewidth=0.5)
     plt.plot([x0+5*w/10,x0+6*w/10,x0+w],[h1,h2,h2],color='k',linewidth=0.5) #Type
@@ -129,13 +133,12 @@ def trace_card(x0,y0,name):
                 Nom = 'XXXXXXXXXXXX'
             plt.text(x0 + 3.5*w/10,h0 - 1.3*h/15 + h/30,Nom[:esp],fontsize = 6)
             plt.text(x0 + 3.5*w/10,h0 - 1.3*h/15 - h/60,Nom[esp+1:],fontsize = 6)
-    plt.text(x0 + 2.2*w/20,h1 - h/15.5,Ere*'I',fontsize = 8)
+    plt.text(x0 + 2*w/20 + + (3-Ere)*w/90,h1 - h/15.5,Ere*'I',fontsize = 8)
     plt.text(x0 + 6.3*w/10,h1 - 0.65*h/15,Type,fontsize = 4)
-    write(x0 + 2.7*w/20,h3 - h/20,Desc,5,h/30,25)
+    write(x0 + 2.7*w/20,h3 - h/20,Desc,5,h/25,22)
     plt.text(x0 + 0.8*w/20,h5 - 0.65*h/15,'Consommation',fontsize = 4)
     plt.text(x0 + 12.8*w/20,h5 - 0.65*h/15,'Production',fontsize = 4)
     
-    cols_res = ['#ffc800','#000000','#55bcff','#ff0000','#954e00','#8d8d8d']	
     i = 0 #Affichage de la consommation
     for k in range(6):
         res = Cons[k]
@@ -163,7 +166,6 @@ def trace_card(x0,y0,name):
                 plt.text(x0 + w/2 + 1.2*w/10 + 2*side,yi + side/10,'x',fontsize = 5)
                 plt.text(x0 + w/2 + 1.2*w/10 + 3.5*side,yi,str(res),fontsize = 6)
 
-    cols_mod = ['#8321d2','#1ca200','#af1d1d']
     for k in range(3):
         mod = Mod[k]
         if mod > 0:
@@ -173,6 +175,53 @@ def trace_card(x0,y0,name):
             ax.add_patch(patches.Rectangle((x0+k*w/3,h8),w/3,h/16,facecolor=cols_mod[k]))
             plt.text(x0 + w/8 + k*w/3,h7 - h/22,'–' + str(-mod),fontsize = 6,color = 'w')
 
+def trace_event(x0,y0,event):
+	
+    Nom,Type,Piste,Agreg,Ere,Seuils,Desc,Nbex = event
+    n_seuils = len(Seuils)
+    
+    h0,h1,h3,h4 = y0,y0-2*h/16,y0-15*h/16,y0-h
+    h2 = [h1 + k*(h3-h1)/n_seuils for k in range(1,n_seuils)]
+    plt.plot([x0,x0+w,x0+w,x0,x0],[y0,y0,y0-h,y0-h,y0],color = 'k') #Contours
+    ax.add_patch(patches.Rectangle((x0,h1),w,h0-h1,facecolor='#fdffca'))
+    plt.plot([x0,x0+w],[h1,h1],color='k',linewidth=0.8) #Ere/nom
+    plt.plot([x0+2*w/10,x0+3*w/10],[h1,h0],color='k',linewidth=0.5)
+    ax.add_patch(patches.Rectangle((x0,h3),w/5,h1-h3,facecolor=cols_mod[Piste],linewidth=0.5)) #Coloriage desc
+    ax.add_patch(patches.Rectangle((x0+w/5,h3),4*w/5,h1-h3,facecolor=cols_mod_light[Piste],linewidth=0.5))
+    for y in h2:
+    	plt.plot([x0,x0+w],[y,y],color='k',linewidth=0.5) #Desc
+    plt.plot([x0+w/5,x0+w/5],[h1,h3],color='k',linewidth=0.5)
+    plt.plot([x0,x0+w],[h3,h3],color='k',linewidth=0.8) #Caracteristiques
+    plt.plot([x0+w/2,x0+w/2],[h3,h4],color='k',linewidth=0.8)
+    
+    
+    if len(Nom) < 8:
+        plt.text(x0 + 3.5*w/10,h0 - 1.3*h/15,Nom,fontsize = 9)
+    else:
+        if len(Nom) < 13:
+            plt.text(x0 + 3.5*w/10 - h/100,h0 - 1.3*h/15 + h/150,Nom,fontsize = 7)
+        else:
+            esp = cut(Nom,12)
+            if esp == -1:
+                Nom = 'XXXXXXXXXXXX'
+            plt.text(x0 + 3.5*w/10,h0 - 1.3*h/15 + h/30,Nom[:esp],fontsize = 6)
+            plt.text(x0 + 3.5*w/10,h0 - 1.3*h/15 - h/60,Nom[esp+1:],fontsize = 6)
+    plt.text(x0 + 1.7*w/20 + (3-Ere)*w/80,h0 - 1.3*h/15,Ere*'I',fontsize = 9)
+    
+    if Agreg == 'Moyenne':
+    	col = '#f88200'
+    else:
+    	col = '#ce69d3'
+    ax.add_patch(patches.Rectangle((x0,h4),w/2,h/16,facecolor=col,linewidth=0.8))
+    plt.text(x0+w/12+(10-len(Agreg))*w/150,h3-h/22,Agreg,fontsize=6,color='w')
+    if Type == 'Normal':
+    	col = '#008eea'
+    else:
+    	col = '#e50000'
+    ax.add_patch(patches.Rectangle((x0+w/2,h4),w/2,h/16,facecolor=col,linewidth=0.8))
+    plt.text(x0+w/2+w/8+(6-len(Type))*w/24,h3-h/22,Type,fontsize=6,color='w')
+	
+
 #def test(): 
 fig = plt.figure(figsize=(W,H))
 ax = fig.add_subplot(111,aspect = 'equal')
@@ -180,16 +229,19 @@ plt.plot([0,W,W,0,0],[H,H,0,0,H],color='k')
 
 testcard = ['USINES','Infrastructure',13,'blabla',[0,1,3,0,0,0],[6,0,0,2,1,1],2,[1,0,-4],10]
 
+testevent = ["VAGUE DE CHALEUR",'Final',0,'Moyenne',3,[7,4,'min'],["Perdez 2 productions de (nourriture)",""],1]
+
 DECK = loadDECK1()
 grid = cards_grid()
 
 for i in range(DECK.shape[0]):
-    trace_card(grid[i][0],grid[i][1],'Exportation de pétrole')
+    #trace_card(grid[i][0],grid[i][1],DECK[i])
+    trace_event(grid[i][0],grid[i][1],testevent)
 
 plt.axis('equal')
 plt.axis('off')
 plt.show()
 
-'''plt.savefig('test.png',format='png',dpi=500)
+plt.savefig('test.png',format='png',dpi=500)
 
-resize('test.png')'''
+resize('test.png')
