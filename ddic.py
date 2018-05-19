@@ -250,7 +250,7 @@ def trace_event(x0,y0,event,subplot):
     plt.text(x0+w/2+w/8+(6-len(Type))*w/24,h3-h/22,Type,fontsize=6,color='w')
 	
 
-def print_deck(deck = loadDECK1(),events = False,save = False):
+def print_deck(deck,events = False,save = False):
 	fig = plt.figure(figsize=(W,H))
 	ax = fig.add_subplot(111,aspect = 'equal')
 	plt.axis('equal')
