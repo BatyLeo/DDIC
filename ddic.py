@@ -72,9 +72,9 @@ def cards_grid():
     return pos
 
 side = h/32
-def disp_squares(x,y,n,color):
+def disp_squares(x,y,n,color,subplot):
     for k in range(n):
-        ax.add_patch(patches.Rectangle((x+1.8*k*side,y),side,side,facecolor=color,linewidth=0.5))
+        subplot.add_patch(patches.Rectangle((x+1.8*k*side,y),side,side,facecolor=color,linewidth=0.5))
 
 def cut(string,n_char):
     i = min(n_char,len(string)-1)
@@ -93,7 +93,7 @@ def write(x0,y0,string,fontsize,dy,n_char):
 	for i in range(len(lines)):
 		plt.text(x0,y0 - i*dy,lines[i],fontsize = fontsize)
 
-def trace_card(x0,y0,name):
+def trace_card(x0,y0,name,subplot):
     card=load_card(name)
     
     Nom=card['Nom']
@@ -108,7 +108,7 @@ def trace_card(x0,y0,name):
 
     h0,h1,h2,h3,h4,h5,h6,h7,h8 = y0,y0-2*h/16,y0-3*h/16,y0-4*h/16,y0-9*h/16,y0-10*h/16,y0-11*h/16,y0-15*h/16,y0-h
     plt.plot([x0,x0+w,x0+w,x0,x0],[y0,y0,y0-h,y0-h,y0],color = 'k') #Contours
-    ax.add_patch(patches.Rectangle((x0,h1),w,h0-h1,facecolor='#fdffca'))
+    subplot.add_patch(patches.Rectangle((x0,h1),w,h0-h1,facecolor='#fdffca'))
     plt.plot([x0,x0+w],[h1,h1],color='k',linewidth=0.8) #Cout/nom
     plt.plot([x0+2*w/10,x0+3*w/10],[h1,h0],color='k',linewidth=0.5)
     plt.plot([x0+5*w/10,x0+6*w/10,x0+w],[h1,h2,h2],color='k',linewidth=0.5) #Type
@@ -122,13 +122,13 @@ def trace_card(x0,y0,name):
     plt.plot([x0+2*w/3,x0+2*w/3],[h7,h8],color='k',linewidth=0.8)
     
     plt.text(x0 + 1.5*w/20,h0 - 1.3*h/15,str(Cout),fontsize = 9)
-    if len(Nom) < 8:
+    if len(Nom) < 10:
         plt.text(x0 + 3.5*w/10,h0 - 1.3*h/15,Nom,fontsize = 9)
     else:
-        if len(Nom) < 13:
+        if len(Nom) < 15:
             plt.text(x0 + 3.5*w/10 - h/100,h0 - 1.3*h/15 + h/150,Nom,fontsize = 7)
         else:
-            esp = cut(Nom,12)
+            esp = cut(Nom,14)
             if esp == -1:
                 Nom = 'XXXXXXXXXXXX'
             plt.text(x0 + 3.5*w/10,h0 - 1.3*h/15 + h/30,Nom[:esp],fontsize = 6)
@@ -147,9 +147,9 @@ def trace_card(x0,y0,name):
             yi = h6 - i*h/18
             plt.text(x0 + 0.5*w/10,yi,'-',fontsize = 8)
             if res < 5:
-                disp_squares(x0 + 1.2*w/10,yi,res,cols_res[k])
+                disp_squares(x0 + 1.2*w/10,yi,res,cols_res[k],subplot)
             else :
-                disp_squares(x0 + 1.2*w/10,yi,1,cols_res[k])
+                disp_squares(x0 + 1.2*w/10,yi,1,cols_res[k],subplot)
                 plt.text(x0 + 1.2*w/10 + 2*side,yi + side/10,'x',fontsize = 5)
                 plt.text(x0 + 1.2*w/10 + 3.5*side,yi,str(res),fontsize = 6)
     i = 0 #Affichage de la production
@@ -160,22 +160,22 @@ def trace_card(x0,y0,name):
             yi = h6 - i*h/18
             plt.text(x0 + w/2 + 0.5*w/10,yi + side/8,'+',fontsize = 5)
             if res < 5:
-                disp_squares(x0 + w/2 + 1.2*w/10,yi,res,cols_res[k])
+                disp_squares(x0 + w/2 + 1.2*w/10,yi,res,cols_res[k],subplot)
             else :
-                disp_squares(x0 + w/2 + 1.2*w/10,yi,1,cols_res[k])
+                disp_squares(x0 + w/2 + 1.2*w/10,yi,1,cols_res[k],subplot)
                 plt.text(x0 + w/2 + 1.2*w/10 + 2*side,yi + side/10,'x',fontsize = 5)
                 plt.text(x0 + w/2 + 1.2*w/10 + 3.5*side,yi,str(res),fontsize = 6)
 
     for k in range(3):
         mod = Mod[k]
         if mod > 0:
-            ax.add_patch(patches.Rectangle((x0+k*w/3,h8),w/3,h/16,facecolor=cols_mod[k]))
+            subplot.add_patch(patches.Rectangle((x0+k*w/3,h8),w/3,h/16,facecolor=cols_mod[k]))
             plt.text(x0 + w/8 + k*w/3,h7 - h/22,'+' + str(mod),fontsize = 6,color = 'w')
         elif mod < 0:
-            ax.add_patch(patches.Rectangle((x0+k*w/3,h8),w/3,h/16,facecolor=cols_mod[k]))
+            subplot.add_patch(patches.Rectangle((x0+k*w/3,h8),w/3,h/16,facecolor=cols_mod[k]))
             plt.text(x0 + w/8 + k*w/3,h7 - h/22,'–' + str(-mod),fontsize = 6,color = 'w')
 
-def trace_event(x0,y0,event):
+def trace_event(x0,y0,event,subplot):
 	
     Nom,Type,Piste,Agreg,Ere,Seuils,Desc,Nbex = event
     n_seuils = len(Seuils)
@@ -183,11 +183,11 @@ def trace_event(x0,y0,event):
     h0,h1,h3,h4 = y0,y0-2*h/16,y0-15*h/16,y0-h
     h2 = [h1 + k*(h3-h1)/n_seuils for k in range(1,n_seuils)]
     plt.plot([x0,x0+w,x0+w,x0,x0],[y0,y0,y0-h,y0-h,y0],color = 'k') #Contours
-    ax.add_patch(patches.Rectangle((x0,h1),w,h0-h1,facecolor='#fdffca'))
+    subplot.add_patch(patches.Rectangle((x0,h1),w,h0-h1,facecolor='#fdffca'))
     plt.plot([x0,x0+w],[h1,h1],color='k',linewidth=0.8) #Ere/nom
     plt.plot([x0+2*w/10,x0+3*w/10],[h1,h0],color='k',linewidth=0.5)
-    ax.add_patch(patches.Rectangle((x0,h3),w/5,h1-h3,facecolor=cols_mod[Piste],linewidth=0.5)) #Coloriage desc
-    ax.add_patch(patches.Rectangle((x0+w/5,h3),4*w/5,h1-h3,facecolor=cols_mod_light[Piste],linewidth=0.5))
+    subplot.add_patch(patches.Rectangle((x0,h3),w/5,h1-h3,facecolor=cols_mod[Piste],linewidth=0.5)) #Coloriage desc
+    subplot.add_patch(patches.Rectangle((x0+w/5,h3),4*w/5,h1-h3,facecolor=cols_mod_light[Piste],linewidth=0.5))
     for y in h2:
     	plt.plot([x0,x0+w],[y,y],color='k',linewidth=0.5) #Desc
     plt.plot([x0+w/5,x0+w/5],[h1,h3],color='k',linewidth=0.5)
@@ -210,7 +210,6 @@ def trace_event(x0,y0,event):
     
     for k in range(n_seuils):
     	write(x0+1.1*w/5,([h1]+h2)[k]-0.15*h/n_seuils,Desc[k],6,0.8*h/16,20)
-    	#write(x0+w/10,([h1]+h2)[k]-0.15*h/n_seuils,str(Seuils[k]),6,h/16,2)
     	if Seuils[k] == 'min':
     		string = 'min'
     	else:
@@ -221,36 +220,54 @@ def trace_event(x0,y0,event):
     	col = '#f88200'
     else:
     	col = '#ce69d3'
-    ax.add_patch(patches.Rectangle((x0,h4),w/2,h/16,facecolor=col,linewidth=0.8))
+    subplot.add_patch(patches.Rectangle((x0,h4),w/2,h/16,facecolor=col,linewidth=0.8))
     plt.text(x0+w/12+(10-len(Agreg))*w/150,h3-h/22,Agreg,fontsize=6,color='w')
     if Type == 'Normal':
     	col = '#008eea'
     else:
     	col = '#e50000'
-    ax.add_patch(patches.Rectangle((x0+w/2,h4),w/2,h/16,facecolor=col,linewidth=0.8))
+    subplot.add_patch(patches.Rectangle((x0+w/2,h4),w/2,h/16,facecolor=col,linewidth=0.8))
     plt.text(x0+w/2+w/8+(6-len(Type))*w/24,h3-h/22,Type,fontsize=6,color='w')
 	
 
-#def test(): 
-fig = plt.figure(figsize=(W,H))
-ax = fig.add_subplot(111,aspect = 'equal')
-plt.plot([0,W,W,0,0],[H,H,0,0,H],color='k')
+def print_deck(deck = loadDECK1(),events = False,save = False):
+	fig = plt.figure(figsize=(W,H))
+	ax = fig.add_subplot(111,aspect = 'equal')
+	plt.axis('equal')
+	plt.axis('off')
+	plt.plot([0,W,W,0,0],[H,H,0,0,H],color='k')
 
-testcard = ['USINES','Infrastructure',13,'blabla',[0,1,3,0,0,0],[6,0,0,2,1,1],2,[1,0,-4],10]
+	testcard = ['USINES','Infrastructure',13,'blabla',[0,1,3,0,0,0],[6,0,0,2,1,1],2,[1,0,-4],10]
 
-testevent = ["VAGUE DE CHALEUR",'Final',0,'Moyenne',3,[7,4,'min'],["Perdez 2 productions de (nourriture)","Bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla",""],1]
+	testevent = ["VAGUE DE CHALEUR",'Final',0,'Moyenne',3,[7,4,'min'],["Perdez 2 productions de (nourriture)","Bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla",""],1]
 
-DECK = loadDECK1()
-grid = cards_grid()
-
-for i in range(DECK.shape[0]):
-    #trace_card(grid[i][0],grid[i][1],DECK[i])
-    trace_event(grid[i][0],grid[i][1],testevent)
-
-plt.axis('equal')
-plt.axis('off')
-plt.show()
-
-'''plt.savefig('test.png',format='png',dpi=500)
-
-resize('test.png')'''
+	grid = cards_grid()
+	
+	pos = 0
+	page = 1
+	for i in range(deck.shape[0]):
+		card = load_card(deck[i])
+		Nbex=card['Exemplaires']
+		for j in range(Nbex):
+		  if pos > 15:
+		    plt.show()
+		    pos = 0
+		    if save:
+			    filename = 'Planche ' + str(page)
+			    plt.savefig(filename + '.png',format='png',dpi=500)
+			    resize(filename + '.png')
+		    page += 1
+		    plt.cla() #Nettoyage de la page
+		    plt.axis('equal')
+		    plt.axis('off')
+		    plt.plot([0,W,W,0,0],[H,H,0,0,H],color='k')
+		  if events:
+		  	trace_event(grid[i][0],grid[i][1],testevent,ax)
+		  else :
+		  	trace_card(grid[pos][0],grid[pos][1],deck[i],ax)
+		  pos += 1
+	plt.show()
+	if save:
+		filename = 'Planche ' + str(page)
+		plt.savefig(filename + '.png',format='png',dpi=500)
+		resize(filename + '.png')
