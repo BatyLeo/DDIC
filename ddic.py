@@ -106,6 +106,13 @@ def trace_card(x0,y0,name,subplot):
     Mod=card['Modificateurs']
     Nbex=card['Exemplaires']
 
+    if Type == 'i':
+    	Type = 'Infrastructures'
+    elif Type == 'a':
+    	Type = 'Accords'
+    else:
+    	Type = 'Décision'
+
     h0,h1,h2,h3,h4,h5,h6,h7,h8 = y0,y0-2*h/16,y0-3*h/16,y0-4*h/16,y0-9*h/16,y0-10*h/16,y0-11*h/16,y0-15*h/16,y0-h
     plt.plot([x0,x0+w,x0+w,x0,x0],[y0,y0,y0-h,y0-h,y0],color = 'k') #Contours
     subplot.add_patch(patches.Rectangle((x0,h1),w,h0-h1,facecolor='#fdffca'))
@@ -118,6 +125,7 @@ def trace_card(x0,y0,name,subplot):
     plt.plot([x0,x0+w],[h6,h6],color='k',linewidth=0.5)
     plt.plot([x0+w/2,x0+w/2],[h6,h7],color='k',linewidth=0.8)
     plt.plot([x0,x0+w],[h7,h7],color='k',linewidth=0.8) #Modificateurs
+    subplot.add_patch(patches.Rectangle((x0,h8),w,h7-h8,facecolor='#e3e3e3'))
     plt.plot([x0+w/3,x0+w/3],[h7,h8],color='k',linewidth=0.8)
     plt.plot([x0+2*w/3,x0+2*w/3],[h7,h8],color='k',linewidth=0.8)
     
@@ -134,7 +142,7 @@ def trace_card(x0,y0,name,subplot):
             plt.text(x0 + 3.5*w/10,h0 - 1.3*h/15 + h/30,Nom[:esp],fontsize = 6)
             plt.text(x0 + 3.5*w/10,h0 - 1.3*h/15 - h/60,Nom[esp+1:],fontsize = 6)
     plt.text(x0 + 2*w/20 + + (3-Ere)*w/90,h1 - h/15.5,Ere*'I',fontsize = 8)
-    plt.text(x0 + 6.3*w/10,h1 - 0.65*h/15,Type,fontsize = 4)
+    plt.text(x0 + 6.3*w/10 + (16-len(Type))*w/150,h1 - 0.65*h/15,Type,fontsize = 4)
     write(x0 + 2.7*w/20,h3 - h/20,Desc,5,h/25,22)
     plt.text(x0 + 0.8*w/20,h5 - 0.65*h/15,'Consommation',fontsize = 4)
     plt.text(x0 + 12.8*w/20,h5 - 0.65*h/15,'Production',fontsize = 4)
@@ -177,7 +185,15 @@ def trace_card(x0,y0,name,subplot):
 
 def trace_event(x0,y0,event,subplot):
 	
-    Nom,Type,Piste,Agreg,Ere,Seuils,Desc,Nbex = event
+    event = load_event(name)
+    Nom=event['Nom']
+    Type=event['Type']
+    Piste=event['Piste']
+    Agreg=event['Agreg']
+    Ere=event['Ere']
+    Seuils=event['Seuils']
+    Desc=event['Description']
+    Nbex=event['Exemplaires']
     n_seuils = len(Seuils)
     
     h0,h1,h3,h4 = y0,y0-2*h/16,y0-15*h/16,y0-h
@@ -216,16 +232,20 @@ def trace_event(x0,y0,event,subplot):
     		string = '$\leq$ ' + str(Seuils[k])
     	plt.text(x0+w/40,([h1]+h2)[k]-0.4*h/n_seuils,string,fontsize = 7)
     
-    if Agreg == 'Moyenne':
+    if Agreg == 'm': #Moyenne vs Individuel
     	col = '#f88200'
+    	Agreg = 'Moyenne'
     else:
     	col = '#ce69d3'
+    	Agreg = 'Individuel'
     subplot.add_patch(patches.Rectangle((x0,h4),w/2,h/16,facecolor=col,linewidth=0.8))
     plt.text(x0+w/12+(10-len(Agreg))*w/150,h3-h/22,Agreg,fontsize=6,color='w')
-    if Type == 'Normal':
+    if Type == 'n': #Normal vs Final
     	col = '#008eea'
+    	Type = 'Normal'
     else:
     	col = '#e50000'
+    	Type = 'Final'
     subplot.add_patch(patches.Rectangle((x0+w/2,h4),w/2,h/16,facecolor=col,linewidth=0.8))
     plt.text(x0+w/2+w/8+(6-len(Type))*w/24,h3-h/22,Type,fontsize=6,color='w')
 	
@@ -262,7 +282,7 @@ def print_deck(deck = loadDECK1(),events = False,save = False):
 		    plt.axis('off')
 		    plt.plot([0,W,W,0,0],[H,H,0,0,H],color='k')
 		  if events:
-		  	trace_event(grid[i][0],grid[i][1],testevent,ax)
+		  	trace_event(grid[pos][0],grid[pos][1],deck[i],ax)
 		  else :
 		  	trace_card(grid[pos][0],grid[pos][1],deck[i],ax)
 		  pos += 1
