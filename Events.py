@@ -30,7 +30,7 @@ def newevent():
     event['Type']=Type
     event['Piste']=Piste
     event['Seuils']=Seuils
-    event['Agregateurs']=Agreg
+    event['Agreg']=Agreg
     event['Description']=Desc
     event['Exemplaires']=Nbex
     np.save('Events/'+Nom,event)
@@ -40,11 +40,11 @@ def newevent():
     np.save('DeckEvents1',d)
     return event
 
-"""    
+
 def modify_card(nom):
-    DECK1=np.load('DECK1.npy')
-    DECK1=np.setdiff1d(DECK1,nom)
-    res=np.load('Cards/'+nom+'.npy').item()
+    deck=np.load('DeckEvents1.npy')
+    deck=np.setdiff1d(deck,nom)
+    res=np.load('Events/'+nom+'.npy').item()
     print(res)
     champ=input('Champ à modifier : ')
     while champ!='':
@@ -87,7 +87,7 @@ def modify_card(nom):
     DECK1=np.append(DECK1,res['Nom'])
     np.save('DECK1',DECK1)
     return res
-"""
+
 
 def load_event(nom):
     res=np.load('Events/'+nom+'.npy').item()
