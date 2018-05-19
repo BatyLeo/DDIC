@@ -208,6 +208,15 @@ def trace_event(x0,y0,event):
             plt.text(x0 + 3.5*w/10,h0 - 1.3*h/15 - h/60,Nom[esp+1:],fontsize = 6)
     plt.text(x0 + 1.7*w/20 + (3-Ere)*w/80,h0 - 1.3*h/15,Ere*'I',fontsize = 9)
     
+    for k in range(n_seuils):
+    	write(x0+1.1*w/5,([h1]+h2)[k]-0.15*h/n_seuils,Desc[k],6,0.8*h/16,20)
+    	#write(x0+w/10,([h1]+h2)[k]-0.15*h/n_seuils,str(Seuils[k]),6,h/16,2)
+    	if Seuils[k] == 'min':
+    		string = 'min'
+    	else:
+    		string = '$\leq$ ' + str(Seuils[k])
+    	plt.text(x0+w/40,([h1]+h2)[k]-0.4*h/n_seuils,string,fontsize = 7)
+    
     if Agreg == 'Moyenne':
     	col = '#f88200'
     else:
@@ -229,7 +238,7 @@ plt.plot([0,W,W,0,0],[H,H,0,0,H],color='k')
 
 testcard = ['USINES','Infrastructure',13,'blabla',[0,1,3,0,0,0],[6,0,0,2,1,1],2,[1,0,-4],10]
 
-testevent = ["VAGUE DE CHALEUR",'Final',0,'Moyenne',3,[7,4,'min'],["Perdez 2 productions de (nourriture)",""],1]
+testevent = ["VAGUE DE CHALEUR",'Final',0,'Moyenne',3,[7,4,'min'],["Perdez 2 productions de (nourriture)","Bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla",""],1]
 
 DECK = loadDECK1()
 grid = cards_grid()
@@ -242,6 +251,6 @@ plt.axis('equal')
 plt.axis('off')
 plt.show()
 
-plt.savefig('test.png',format='png',dpi=500)
+'''plt.savefig('test.png',format='png',dpi=500)
 
-resize('test.png')
+resize('test.png')'''
