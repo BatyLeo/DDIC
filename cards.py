@@ -1,5 +1,7 @@
 import numpy as np 
-import matplotlib.pyplot as plt 
+import matplotlib.pyplot as plt
+import os.path
+
 
 ressources=['UM','fossile','électricité','nourriture','déchets','pollution']
 jauges=['Economique','Environnemental','Social']
@@ -65,6 +67,14 @@ def newcard():
 def loadDECK1():
     DECK1=np.load('DECK1.npy')
     return DECK1
+    
+def actualiseDECK1():
+    deck=loadDECK1()
+    for card in deck:
+        if(not os.path.isfile('Cards/' + card + '.npy')):
+            deck=np.setdiff1d(deck,card)
+    print(deck)
+    np.save('DECK1',deck)
 
 def modify_card(nom):
     DECK1=np.load('DECK1.npy')
