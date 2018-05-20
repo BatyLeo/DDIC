@@ -55,12 +55,14 @@ plt.plot([mid,mid],[0,W],color='k',linewidth=2) #Zones de stockage
 plt.plot([mid,H],[2*W/3,2*W/3],color='k',linewidth=2)
 plt.plot([mid,H],[W/3,W/3],color='k',linewidth=2)
 plt.plot([(H+mid)/2,(H+mid)/2],[W/3,0],color='k',linewidth=2)
-plt.text(1.05*mid,9.5*W/12,'$UM$',color=cols_res[0],fontsize=60)
-plt.text(1.11*mid,5.5*W/12,'$F$',color=cols_res[2],fontsize=60)
+plt.text(1.05*mid,9.5*W/12,'$UM$',color=cols_res[0],fontsize=60,alpha=0.5)
+plt.text(1.11*mid,5.5*W/12,'$F$',color=cols_res[2],fontsize=60,alpha=0.5)
+plt.text(1.025*mid,1.5*W/12,'$P$',color=cols_res[5],fontsize=60,alpha=0.5)
+plt.text(1.185*mid,1.67*W/12,'$Env$',color='#20c22e',fontsize=30,alpha=0.5)
 
 plt.axis('equal')
 plt.axis('off')
 plt.show()
 
-#plt.savefig('jauges.png',format='png',dpi=500)
-#resize('jauges.png')
+plt.savefig('jauges.png',format='png',dpi=500)
+resize('jauges.png')
