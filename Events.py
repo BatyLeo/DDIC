@@ -41,51 +41,29 @@ def newevent():
     return event
 
 
-def modify_card(nom):
+def modify_event(nom):
     deck=np.load('DeckEvents1.npy')
     deck=np.setdiff1d(deck,nom)
     res=np.load('Events/'+nom+'.npy').item()
     print(res)
     champ=input('Champ à modifier : ')
     while champ!='':
-        if (champ=='Exemplaires' or champ=='Ere' or champ=='Cout'):
+        if (champ=='Exemplaires' or champ=='Ere' or champ=='Piste'):
             modif=input("Modification : ")
             res[champ]=int(modif)
-        elif (champ=='Nom' or champ=='Type' or champ=='Description'):
+        elif (champ=='Nom' or champ=='Type' or champ=='Agreg'):
             modif=input("Modification : ")
             res[champ]=modif
-        elif champ=='Production':
-            Prod=[]
-            for i in range(len(ressources)):
-                prod=input('- ' + ressources[i]+' : ')
-                if prod=='':
-                    Prod.append(0)
-                else:
-                    Prod.append(int(prod))
-            res[champ]=Prod
-        elif champ=='Consommation':
-            Cons=[]
-            for i in range(len(ressources)):
-                cons=input('- ' + ressources[i]+' : ')
-                if cons=='':
-                    Cons.append(0)
-                else:
-                    Cons.append(int(cons))
-            res[champ]=Cons
-        else: # champs==modificateurs
-            Mod=[]
-            for i in range(len(ressources)):
-                mod=input('- ' + ressources[i]+' : ')
-                if mod=='':
-                    Mod.append(0)
-                else:
-                    Mod.append(int(mod))
-            res[champ]=Mod
-
+        elif (champ=='Description' or champ=='Seuils'):
+            A=[]
+            n=int(input('nb'+champ+' : '))
+            for k in range(n):
+                A.append(input(champ+' '+str(k)+' : '))
+            res[champ]=A
         champ=input('Champ à modifier : ')
     np.save('Cards/'+res['Nom'],res)
-    DECK1=np.append(DECK1,res['Nom'])
-    np.save('DECK1',DECK1)
+    deck=np.append(deck,res['Nom'])
+    np.save('DeckEvent',deck)
     return res
 
 
