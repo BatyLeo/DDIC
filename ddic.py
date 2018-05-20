@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt 
 import matplotlib.patches as patches
 from cards import *
+from Events import *
 plt.rcParams['image.cmap'] = 'gray'
 
 ressources=['UM','fossile','électricité','nourriture','déchets','pollution']
@@ -92,6 +93,9 @@ def write(x0,y0,string,fontsize,dy,n_char,latex=False):
 	lines.append(string)
 	for i in range(len(lines)):
 		if latex:
+			for k in range(len(lines[i])):
+				if lines[i][k] == ' ':
+					lines[i][k] = '~'
 			lines[i] = '$'+lines[i]+'$'
 		plt.text(x0,y0 - i*dy,lines[i],fontsize = fontsize)
 
@@ -185,7 +189,7 @@ def trace_card(x0,y0,name,subplot):
             subplot.add_patch(patches.Rectangle((x0+k*w/3,h8),w/3,h/16,facecolor=cols_mod[k]))
             plt.text(x0 + w/8 + k*w/3,h7 - h/22,'–' + str(-mod),fontsize = 6,color = 'w')
 
-def trace_event(x0,y0,event,subplot):
+def trace_event(x0,y0,name,subplot):
 	
     event = load_event(name)
     Nom=event['Nom']
@@ -257,6 +261,10 @@ def trace_event(x0,y0,event,subplot):
 	
 
 def print_deck(deck,events = False,save = False):
+	prefix = 'Planche '
+	if events:
+		prefix += 'events '
+	
 	fig = plt.figure(figsize=(W,H))
 	ax = fig.add_subplot(111,aspect = 'equal')
 	plt.axis('equal')
@@ -272,13 +280,16 @@ def print_deck(deck,events = False,save = False):
 	pos = 0
 	page = 1
 	for i in range(deck.shape[0]):
-		card = load_card(deck[i])
+		if events:
+			card = load_event(deck[i])
+		else:
+			card = load_card(deck[i])
 		Nbex=card['Exemplaires']
 		for j in range(Nbex):
 		  if pos > 15:
 		    pos = 0
 		    if save:
-			    filename = 'Planche ' + str(page)
+			    filename = prefix + str(page)
 			    plt.savefig(filename + '.png',format='png',dpi=500)
 			    resize(filename + '.png')
 		    else:
@@ -295,7 +306,7 @@ def print_deck(deck,events = False,save = False):
 		  pos += 1
 
 	if save:
-		filename = 'Planche ' + str(page)
+		filename = prefix + str(page)
 		plt.savefig(filename + '.png',format='png',dpi=500)
 		resize(filename + '.png')
 	else:
