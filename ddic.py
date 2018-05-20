@@ -82,7 +82,7 @@ def cut(string,n_char):
         i -= 1
     return i
 
-def write(x0,y0,string,fontsize,dy,n_char):
+def write(x0,y0,string,fontsize,dy,n_char,latex=False):
 	lines = []
 	n = 0
 	while len(string) > n_char:
@@ -91,6 +91,8 @@ def write(x0,y0,string,fontsize,dy,n_char):
 		string = string[n+1:]
 	lines.append(string)
 	for i in range(len(lines)):
+		if latex:
+			lines[i] = '$'+lines[i]+'$'
 		plt.text(x0,y0 - i*dy,lines[i],fontsize = fontsize)
 
 def trace_card(x0,y0,name,subplot):
@@ -225,12 +227,16 @@ def trace_event(x0,y0,event,subplot):
     plt.text(x0 + 1.7*w/20 + (3-Ere)*w/80,h0 - 1.3*h/15,Ere*'I',fontsize = 9)
     
     for k in range(n_seuils):
-    	write(x0+1.1*w/5,([h1]+h2)[k]-0.15*h/n_seuils,Desc[k],6,0.8*h/16,20)
+    	latex = False
     	if Seuils[k] == 'min':
     		string = 'min'
+    	elif Seuils[k] == 'effet':
+    		string = ''
+    		latex = True
     	else:
     		string = '$\leq$ ' + str(Seuils[k])
     	plt.text(x0+w/40,([h1]+h2)[k]-0.4*h/n_seuils,string,fontsize = 7)
+    	write(x0+1.1*w/5,([h1]+h2)[k]-0.15*h/n_seuils,Desc[k],6,0.8*h/16,20,latex)
     
     if Agreg == 'm': #Moyenne vs Individuel
     	col = '#f88200'
@@ -270,12 +276,13 @@ def print_deck(deck,events = False,save = False):
 		Nbex=card['Exemplaires']
 		for j in range(Nbex):
 		  if pos > 15:
-		    plt.show()
 		    pos = 0
 		    if save:
 			    filename = 'Planche ' + str(page)
 			    plt.savefig(filename + '.png',format='png',dpi=500)
 			    resize(filename + '.png')
+		    else:
+			    plt.show()
 		    page += 1
 		    plt.cla() #Nettoyage de la page
 		    plt.axis('equal')
@@ -286,8 +293,10 @@ def print_deck(deck,events = False,save = False):
 		  else :
 		  	trace_card(grid[pos][0],grid[pos][1],deck[i],ax)
 		  pos += 1
-	plt.show()
+
 	if save:
 		filename = 'Planche ' + str(page)
 		plt.savefig(filename + '.png',format='png',dpi=500)
 		resize(filename + '.png')
+	else:
+		plt.show()
