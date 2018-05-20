@@ -14,17 +14,18 @@ def newevent():
     Type=input('Type de la carte : ') # string
     Piste=int(input('Piste : '))
     Seuils=[]
-    nbseuils=input('nb seuils : ')
+    nbseuils=int(input('nb seuils : '))
     for k in range(nbseuils):
         Seuils.append(input('seuil '+str(k)+ ': '))
-    Desc=input('Description et effets de la carte : ') # string
+    Desc=[]
+    for k in range(nbseuils):
+        Desc.append(input('Description '+str(k)+' : '))
     Agreg=input('Agregateur : ')
     Nbex=input("nombre d'exemplaires : ")
     if Nbex=='':
         Nbex=0
     else:
         Nbex=int(Nbex)
-    
     event['Nom']=Nom
     event['Ere']=Ere
     event['Type']=Type
@@ -33,8 +34,7 @@ def newevent():
     event['Agreg']=Agreg
     event['Description']=Desc
     event['Exemplaires']=Nbex
-    np.save('Events/'+Nom,event)
-    
+    np.save('Events/'+event['Nom'],event)
     d=np.load('DeckEvents1.npy')
     d=np.append(d,[Nom])
     np.save('DeckEvents1',d)
