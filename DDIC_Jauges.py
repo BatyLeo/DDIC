@@ -15,12 +15,18 @@ def trace_track(x0,y0,limits,w,d,color):
 	for i in range(101):
 		plt.plot([x0+(1+4*i/10000)*w,x0+(1+4*i/10000)*w],[y0-i/100*d/2,y0-d+i/100*d/2],color=color,linewidth=0.4)
 	n = vmax-vmin+1
-	for k in range(n):
-		if color == '#000000':
-			c = '#f6f6f6'
+	if color == '#000000':
+		c = '#f6f6f6'
+		if vmin == 0:
+			R = range(1,n)
 		else:
-			c = 'k'
-		plt.plot([x0 + (k+1)*w/n,x0 + (k+1)*w/n],[y0,y0-d],color=c,linewidth=0.7)
+			R = range(1,n-2)
+	else:
+		c = 'k'
+		R = range(n)
+	for k in range(n):
+		if k in R:
+			plt.plot([x0 + (k+1)*w/n,x0 + (k+1)*w/n],[y0,y0-d],color=c,linewidth=0.7)
 		num = (3-len(str(vmin+k)))*' ' + str(vmin+k)
 		if vmin+k == 0:
 			ax.add_patch(patches.Rectangle((x0+k*w/n,y0-d),w/n,d,facecolor='#f6f6f6'))
@@ -55,10 +61,10 @@ plt.plot([mid,mid],[0,W],color='k',linewidth=2) #Zones de stockage
 plt.plot([mid,H],[2*W/3,2*W/3],color='k',linewidth=2)
 plt.plot([mid,H],[W/3,W/3],color='k',linewidth=2)
 plt.plot([(H+mid)/2,(H+mid)/2],[W/3,0],color='k',linewidth=2)
-plt.text(1.05*mid,9.5*W/12,'$UM$',color=cols_res[0],fontsize=60,alpha=0.5)
-plt.text(1.11*mid,5.5*W/12,'$F$',color=cols_res[2],fontsize=60,alpha=0.5)
-plt.text(1.025*mid,1.5*W/12,'$P$',color=cols_res[5],fontsize=60,alpha=0.5)
-plt.text(1.185*mid,1.67*W/12,'$Env$',color='#20c22e',fontsize=30,alpha=0.5)
+plt.text(1.05*mid,9.5*W/12,'$UM$',color=cols_res[0],fontsize=60,alpha=0.7)
+plt.text(1.11*mid,5.5*W/12,'$H$',color=cols_res[2],fontsize=60,alpha=0.7)
+plt.text(1.025*mid,1.5*W/12,'$P$',color=cols_res[5],fontsize=60,alpha=0.7)
+plt.text(1.185*mid,1.67*W/12,'$Env$',color='#20c22e',fontsize=30,alpha=0.7)
 
 plt.axis('equal')
 plt.axis('off')
