@@ -92,11 +92,11 @@ def write(x0,y0,string,fontsize,dy,n_char,latex=False):
 		string = string[n+1:]
 	lines.append(string)
 	for i in range(len(lines)):
-		if latex:
-			for k in range(len(lines[i])):
-				if lines[i][k] == ' ':
-					lines[i][k] = '~'
-			lines[i] = '$'+lines[i]+'$'
+		#if latex:
+			#for k in range(len(lines[i])):
+				#if lines[i][k] == ' ':
+					#lines[i][k] = '~'
+			#lines[i] = '$'+lines[i]+'$'
 		plt.text(x0,y0 - i*dy,lines[i],fontsize = fontsize)
 
 def trace_card(x0,y0,name,subplot):
