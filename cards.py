@@ -111,8 +111,8 @@ def modify_card(nom):
             res[champ]=Cons
         else: # champs==modificateurs
             Mod=[]
-            for i in range(len(ressources)):
-                mod=input('- ' + ressources[i]+' : ')
+            for i in range(len(jauges)):
+                mod=input('- ' +jauges[i]+' : ')
                 if mod=='':
                     Mod.append(0)
                 else:

@@ -63,7 +63,7 @@ def modify_event(nom):
         champ=input('Champ à modifier : ')
     np.save('Cards/'+res['Nom'],res)
     deck=np.append(deck,res['Nom'])
-    np.save('DeckEvent',deck)
+    np.save('DeckEvents1',deck)
     return res
 
 
