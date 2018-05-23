@@ -34,15 +34,15 @@ def newevent():
     event['Agreg']=Agreg
     event['Description']=Desc
     event['Exemplaires']=Nbex
-    np.save('Events/'+event['Nom'],event)
-    d=np.load('DeckEvents1.npy')
+    np.save('Events2/'+event['Nom'],event)
+    d=np.load('DeckEvents2.npy')
     d=np.append(d,[Nom])
-    np.save('DeckEvents1',d)
+    np.save('DeckEvents2',d)
     return event
 
 
 def modify_event(nom):
-    deck=np.load('DeckEvents1.npy')
+    deck=np.load('DeckEvents2.npy')
     deck=np.setdiff1d(deck,nom)
     res=np.load('Events/'+nom+'.npy').item()
     print(res)
@@ -61,9 +61,9 @@ def modify_event(nom):
                 A.append(input(champ+' '+str(k)+' : '))
             res[champ]=A
         champ=input('Champ à modifier : ')
-    np.save('Events/'+res['Nom'],res)
+    np.save('Events2/'+res['Nom'],res)
     deck=np.append(deck,res['Nom'])
-    np.save('DeckEvents1',deck)
+    np.save('DeckEvents2',deck)
     return res
 
 

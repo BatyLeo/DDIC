@@ -58,9 +58,9 @@ def newcard():
     carte['Exemplaires']=nbex
     np.save('Cards/'+Nom,carte)
     
-    DECK1=np.load('DECK1.npy')
+    DECK1=np.load('DECK22.npy')
     DECK1=np.append(DECK1,[Nom])
-    np.save('DECK1',DECK1)
+    np.save('DECK22',DECK1)
     return carte
 
 
@@ -79,7 +79,7 @@ def actualiseDECK1():
 
 
 def modify_card(nom):
-    DECK1=np.load('DECK1.npy')
+    DECK1=np.load('DECK22.npy')
     DECK1=np.setdiff1d(DECK1,nom)
     res=np.load('Cards/'+nom+'.npy').item()
     print(res)
@@ -122,7 +122,7 @@ def modify_card(nom):
         champ=input('Champ à modifier : ')
     np.save('Cards/'+res['Nom'],res)
     DECK1=np.append(DECK1,res['Nom'])
-    np.save('DECK1',DECK1)
+    np.save('DECK22',DECK1)
     return res
         
 
