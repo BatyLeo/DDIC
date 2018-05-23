@@ -44,7 +44,7 @@ def newevent():
 def modify_event(nom):
     deck=np.load('DeckEvents2.npy')
     deck=np.setdiff1d(deck,nom)
-    res=np.load('Events/'+nom+'.npy').item()
+    res=np.load('Events2/'+nom+'.npy').item()
     print(res)
     champ=input('Champ à modifier : ')
     while champ!='':
