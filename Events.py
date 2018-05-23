@@ -68,5 +68,5 @@ def modify_event(nom):
 
 
 def load_event(nom):
-    res=np.load('Events/'+nom+'.npy').item()
+    res=np.load('Events2/'+nom+'.npy').item()
     return res
