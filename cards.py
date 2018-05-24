@@ -79,9 +79,9 @@ def actualiseDECK1():
 
 
 def modify_card(nom):
-    DECK1=np.load('DECK22.npy')
+    DECK1=np.load('DECK3.npy')
     DECK1=np.setdiff1d(DECK1,nom)
-    res=np.load('Cards/'+nom+'.npy').item()
+    res=np.load('Cards2/'+nom+'.npy').item()
     print(res)
     champ=input('Champ à modifier : ')
     while champ!='':
@@ -120,20 +120,20 @@ def modify_card(nom):
             res[champ]=Mod
 
         champ=input('Champ à modifier : ')
-    np.save('Cards/'+res['Nom'],res)
+    np.save('Cards2/'+res['Nom'],res)
     DECK1=np.append(DECK1,res['Nom'])
-    np.save('DECK22',DECK1)
+    np.save('DECK3',DECK1)
     return res
         
 
 def modify_champ(nom,champ,valeur):
-    DECK1=np.load('DECK1.npy')
-    DECK1.remove('Cards/'+nom)
+    DECK1=np.load('DECK3.npy')
+    DECK1.remove('Cards2/'+nom)
     res=np.load(nom+'.npy').item()
     res[champ]=valeur
-    np.save('Cards/'+res['Nom'],res)
+    np.save('Cards2/'+res['Nom'],res)
     DECK1=np.append(DECK1,res['Nom'])
-    np.save('DECK1',DECK1)
+    np.save('DECK"',DECK1)
     return res
     
 def load_card(nom):
