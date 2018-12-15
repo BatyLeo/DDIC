@@ -261,7 +261,8 @@ def trace_event(x0,y0,name,subplot):
 	
 
 def print_deck(deck,events = False,save = False):
-	prefix = 'Planche '
+	prefix = deck + ' planche '
+	deck = loadDeck(deck)
 	if events:
 		prefix += 'events '
 	
@@ -284,7 +285,8 @@ def print_deck(deck,events = False,save = False):
 			card = load_event(deck[i])
 		else:
 			card = load_card(deck[i])
-		Nbex=card['Exemplaires']
+		#Nbex=card['Exemplaires'] ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+		Nbex = 1
 		for j in range(Nbex):
 		  if pos > 15:
 		    pos = 0
